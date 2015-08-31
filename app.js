@@ -1,4 +1,22 @@
-angular.module('InstAngular', [])
+angular.module('InstAngular', ['ngRoute'])
+
+.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+    $routeProvider
+      .when('/', {
+        templateUrl: 'templates/search.html',
+        controller: 'MainCtrl'
+      })
+
+      .when('/favorites', {
+        templateUrl: 'templates/favorites.html',
+        controller: 'FavoritesCtrl'
+      });
+
+    $locationProvider.html5Mode({
+      enabled: true,
+      requireBase: false
+    });
+  }])
 
 .controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
 	$scope.photos = [];
@@ -13,4 +31,28 @@ angular.module('InstAngular', [])
 		});
 
 	};
-	}]);
+
+	$scope.savePhoto = function (photo){
+		// check if localStorage.photos doesnt exists
+		if (!localStorage.photos) {
+			localStorage.photos = JSON.stringify([]);
+		}
+
+		var allPhotos = JSON.parse(localStorage.photos);
+		allPhotos.push(photo);
+
+		localStorage.photos = JSON.stringify(allPhotos);
+
+		//stringinfy photo object and push into localstorage.photos
+		console.log(photo);
+		console.log(localStorage.photos)
+	};
+	}])
+
+	.controller('FavoritesCtrl', ['$scope', function ($scope) {
+    if (!localStorage.photos) {
+      $scope.favorites = [];
+    } else {
+      $scope.favorites = JSON.parse(localStorage.photos);
+    }
+  }]);
