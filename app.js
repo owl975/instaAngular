@@ -10,12 +10,14 @@ angular.module('InstAngular', ['ngRoute'])
       .when('/favorites', {
         templateUrl: 'templates/favorites.html',
         controller: 'FavoritesCtrl'
+      })
+
+      .when('/chat', {
+      	templateUrl: 'templates/chat.html',
+      	controller: 'ChatCtrl'
       });
 
-    $locationProvider.html5Mode({
-      enabled: true,
-      requireBase: false
-    });
+   
   }])
 
 .controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
@@ -23,6 +25,7 @@ angular.module('InstAngular', ['ngRoute'])
 
 	$scope.searchTag = function(){
 		console.log($scope.tag);
+		$scope.tag = "jellyfish";
 		var url = 'https://api.instagram.com/v1/tags/' + $scope.tag + '/media/recent?client_id=34852ee303674ea9aaabcad7c3b99196&callback=JSON_CALLBACK'
 		$http.jsonp(url)
 		.then(function (response){
@@ -37,6 +40,7 @@ angular.module('InstAngular', ['ngRoute'])
 		if (!localStorage.photos) {
 			localStorage.photos = JSON.stringify([]);
 		}
+		sweetAlert("THATS A SEXY JELLY");
 
 		var allPhotos = JSON.parse(localStorage.photos);
 		allPhotos.push(photo);

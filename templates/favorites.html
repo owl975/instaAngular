@@ -11,7 +11,7 @@
         @{{photo.user.username}}
         <span class="pull-right">
           <span class="glyphicon glyphicon-heart"></span>
-          <ng-pluralize count="{{photo.likes.count}}" when="{'one': '1 like', 'other': '{} likes'}"></ng-pluralize>
+          <a href="javascript:void(0)" ng-click="savePhoto(photo)">Chat</a>
         </span>
       </p>
     </div>
